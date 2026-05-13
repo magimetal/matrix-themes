@@ -61,5 +61,5 @@ mkdir -p ~/.pi/agent/themes && cp pi/matrix-green.json ~/.pi/agent/themes/
 ## NOTES
 - Repo has no package manager, build system, test runner, CI, or git metadata.
 - Pi loads project themes from `.pi/themes/*.json`; this repo currently stores source under `pi/`, so copy or link before live Pi testing.
-- README says `./matrix-green.json`; file actually lives at `pi/matrix-green.json`.
+- README favors symlink installs so edits in this repo update tool config without copy drift.
 - Optional Pi `export` colors are present and map HTML export surfaces back to theme vars.
