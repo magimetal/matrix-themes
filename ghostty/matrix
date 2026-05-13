@@ -1,0 +1,38 @@
+# Matrix (Ghostty)
+# Dark haunted terminal palette adapted from the corrected Matrix/pi palette intent.
+
+background = #070b12
+foreground = #eef8ff
+
+cursor-color = #b8f7e1
+cursor-text = #070b12
+
+selection-background = #26354a
+selection-foreground = #eef8ff
+
+split-divider-color = #26354a
+
+search-background = #26354a
+search-foreground = #eef8ff
+search-selected-background = #b8f7e1
+search-selected-foreground = #070b12
+
+palette = 0=#070b12
+palette = 1=#46ff8f
+palette = 2=#8fffd2
+palette = 3=#d6ccff
+palette = 4=#9bb8c8
+palette = 5=#c8f8ff
+palette = 6=#b8f7e1
+palette = 7=#eef8ff
+
+palette = 8=#678a9d
+palette = 9=#a7ffdf
+palette = 10=#d7fff2
+palette = 11=#efe9ff
+palette = 12=#c3deec
+palette = 13=#e6f2ff
+palette = 14=#c8f8ff
+palette = 15=#ffffff
+
+bold-is-bright = true
