@@ -1,6 +1,6 @@
 # Matrix Themes
 
-Matrix-inspired terminal themes for Pi and Ghostty.
+Matrix-inspired terminal and editor themes for Pi, Ghostty, and Zed.
 
 This repo keeps source theme files in tool-specific directories and favors symlink installs so local edits in this repo hot-reload or stay one command away from use.
 
@@ -10,6 +10,7 @@ This repo keeps source theme files in tool-specific directories and favors symli
 |---|---|---|---|
 | Pi coding agent | `pi/matrix-green.json` | `matrix-green` | Full Pi TUI theme with all 51 required color tokens. |
 | Ghostty | `ghostty/matrix` | `matrix` | Cool dark Matrix terminal palette. |
+| Zed | `zed/matrix-green.json` | `Matrix Green / Zed` | Dark editor theme derived from Pi UI colors and Ghostty terminal ANSI colors. |
 
 ## Install with symlinks
 
@@ -51,6 +52,17 @@ theme = matrix
 
 If your Ghostty config lives outside `~/.config/ghostty` (common on macOS GUI installs), symlink into that config directory's `themes/` folder instead.
 
+### Zed
+
+Zed custom themes can live under `~/.config/zed/themes`.
+
+```bash
+mkdir -p ~/.config/zed/themes
+ln -sfn "$PWD/zed/matrix-green.json" ~/.config/zed/themes/matrix-green.json
+```
+
+Restart Zed or reopen the theme selector, then select `Matrix Green / Zed`.
+
 ## Install by copy
 
 Use copy install when you do not want the live repo linked into app config.
@@ -61,6 +73,9 @@ cp pi/matrix-green.json ~/.pi/agent/themes/matrix-green.json
 
 mkdir -p ~/.config/ghostty/themes
 cp ghostty/matrix ~/.config/ghostty/themes/matrix
+
+mkdir -p ~/.config/zed/themes
+cp zed/matrix-green.json ~/.config/zed/themes/matrix-green.json
 ```
 
 Copy installs do not update when repo files change. Re-copy after edits.
@@ -88,6 +103,16 @@ jq -r '.colors | to_entries[] | select(.value|type=="string") | select(.value !=
   | while read v; do jq -e --arg v "$v" '.vars[$v] != null' pi/matrix-green.json >/dev/null || echo "$v"; done
 ```
 
+### Zed theme
+
+Keep Zed theme colors in 8-digit `#RRGGBBAA` format.
+
+```bash
+jq -e '.name == "Matrix Green" and .themes[0].name == "Matrix Green / Zed" and .themes[0].appearance == "dark"' zed/matrix-green.json
+
+jq -e '([.. | strings | select(startswith("#"))] | length > 0 and all(test("^#[0-9A-Fa-f]{8}$")))' zed/matrix-green.json
+```
+
 ### Ghostty theme
 
 Keep `ghostty/matrix` as Ghostty config syntax:
@@ -104,6 +129,7 @@ palette = 0=#070b12
 matrix-themes/
 ├── pi/matrix-green.json
 ├── ghostty/matrix
+├── zed/matrix-green.json
 ├── AGENTS.md
 └── README.md
 ```
