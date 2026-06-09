@@ -1,0 +1,22 @@
+{
+  "name": "matrix-green-theme",
+  "displayName": "Matrix Green Theme",
+  "description": "Matrix Green color theme for VS Code.",
+  "version": "0.1.0",
+  "publisher": "matrix-themes",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Matrix Green",
+        "uiTheme": "vs-dark",
+        "path": "./themes/matrix-green-color-theme.json"
+      }
+    ]
+  }
+}

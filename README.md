@@ -1,6 +1,6 @@
 # Matrix Themes
 
-Matrix-inspired terminal and editor themes for Pi, Ghostty, and Zed.
+Matrix-inspired terminal and editor themes for Pi, Ghostty, Zed, and VS Code.
 
 This repo keeps source theme files in tool-specific directories and favors symlink installs so local edits in this repo hot-reload or stay one command away from use.
 
@@ -11,6 +11,7 @@ This repo keeps source theme files in tool-specific directories and favors symli
 | Pi coding agent | `pi/matrix-green.json` | `matrix-green` | Full Pi TUI theme with all 51 required color tokens. |
 | Ghostty | `ghostty/matrix` | `matrix` | Cool dark Matrix terminal palette. |
 | Zed | `zed/matrix-green.json` | `Matrix Green / Zed` | Dark editor theme derived from Pi UI colors and Ghostty terminal ANSI colors. |
+| VS Code | `vscode/themes/matrix-green-color-theme.json` | `Matrix Green` | Dark VS Code theme extension using Zed/Pi UI colors and Ghostty terminal ANSI colors. |
 
 ## Install with symlinks
 
@@ -63,6 +64,17 @@ ln -sfn "$PWD/zed/matrix-green.json" ~/.config/zed/themes/matrix-green.json
 
 Restart Zed or reopen the theme selector, then select `Matrix Green / Zed`.
 
+### VS Code
+
+VS Code local extensions can live under `~/.vscode/extensions`.
+
+```bash
+mkdir -p ~/.vscode/extensions
+ln -sfn "$PWD/vscode" ~/.vscode/extensions/matrix-green-theme
+```
+
+Reload VS Code, then run `Preferences: Color Theme` and select `Matrix Green`.
+
 ## Install by copy
 
 Use copy install when you do not want the live repo linked into app config.
@@ -76,6 +88,9 @@ cp ghostty/matrix ~/.config/ghostty/themes/matrix
 
 mkdir -p ~/.config/zed/themes
 cp zed/matrix-green.json ~/.config/zed/themes/matrix-green.json
+
+mkdir -p ~/.vscode/extensions/matrix-green-theme
+cp -R vscode/* ~/.vscode/extensions/matrix-green-theme/
 ```
 
 Copy installs do not update when repo files change. Re-copy after edits.
@@ -113,6 +128,20 @@ jq -e '.name == "Matrix Green" and .themes[0].name == "Matrix Green / Zed" and .
 jq -e '([.. | strings | select(startswith("#"))] | length > 0 and all(test("^#[0-9A-Fa-f]{8}$")))' zed/matrix-green.json
 ```
 
+### VS Code theme
+
+Keep `vscode/package.json` minimal: one contributed dark color theme pointing at `vscode/themes/matrix-green-color-theme.json`.
+
+```bash
+jq -e '.contributes.themes[0].label == "Matrix Green" and .contributes.themes[0].uiTheme == "vs-dark" and .contributes.themes[0].path == "./themes/matrix-green-color-theme.json" and (.categories | index("Themes"))' vscode/package.json
+
+test -f "vscode/$(jq -r '.contributes.themes[0].path' vscode/package.json)"
+
+jq -e '.name == "Matrix Green" and .type == "dark" and .semanticHighlighting == true and (.colors | length > 40) and (.tokenColors | length > 10) and (.semanticTokenColors | length > 10)' vscode/themes/matrix-green-color-theme.json
+
+jq -e '([.. | strings | select(startswith("#"))] | all(test("^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$")))' vscode/themes/matrix-green-color-theme.json
+```
+
 ### Ghostty theme
 
 Keep `ghostty/matrix` as Ghostty config syntax:
@@ -130,6 +159,8 @@ matrix-themes/
 ├── pi/matrix-green.json
 ├── ghostty/matrix
 ├── zed/matrix-green.json
+├── vscode/package.json
+├── vscode/themes/matrix-green-color-theme.json
 ├── AGENTS.md
 └── README.md
 ```
