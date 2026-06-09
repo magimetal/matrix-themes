@@ -10,6 +10,9 @@
   "categories": [
     "Themes"
   ],
+  "scripts": {
+    "package": "npx --yes @vscode/vsce package --allow-missing-repository"
+  },
   "contributes": {
     "themes": [
       {

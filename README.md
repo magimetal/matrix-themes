@@ -2,7 +2,7 @@
 
 Matrix-inspired terminal and editor themes for Pi, Ghostty, Zed, and VS Code.
 
-This repo keeps source theme files in tool-specific directories and favors symlink installs so local edits in this repo hot-reload or stay one command away from use.
+This repo keeps source theme files in tool-specific directories. Pi, Ghostty, and Zed favor symlink installs for live editing; VS Code builds a real installable `.vsix` package.
 
 ## Themes
 
@@ -13,9 +13,9 @@ This repo keeps source theme files in tool-specific directories and favors symli
 | Zed | `zed/matrix-green.json` | `Matrix Green / Zed` | Dark editor theme derived from Pi UI colors and Ghostty terminal ANSI colors. |
 | VS Code | `vscode/themes/matrix-green-color-theme.json` | `Matrix Green` | Dark VS Code theme extension using Zed/Pi UI colors and Ghostty terminal ANSI colors. |
 
-## Install with symlinks
+## Install
 
-Run commands from repo root.
+Run commands from repo root. Pi, Ghostty, and Zed use symlinks for live editing. VS Code uses a packaged `.vsix`.
 
 ### Pi
 
@@ -66,14 +66,16 @@ Restart Zed or reopen the theme selector, then select `Matrix Green / Zed`.
 
 ### VS Code
 
-VS Code local extensions can live under `~/.vscode/extensions`.
+Build and install the VSIX package instead of symlinking the extension directory.
 
 ```bash
-mkdir -p ~/.vscode/extensions
-ln -sfn "$PWD/vscode" ~/.vscode/extensions/matrix-green-theme
+cd vscode
+npm run package
+cd ..
+code --install-extension vscode/matrix-green-theme-0.1.0.vsix
 ```
 
-Reload VS Code, then run `Preferences: Color Theme` and select `Matrix Green`.
+Reload VS Code if prompted, then run `Preferences: Color Theme` and select `Matrix Green`.
 
 ## Install by copy
 
@@ -88,12 +90,18 @@ cp ghostty/matrix ~/.config/ghostty/themes/matrix
 
 mkdir -p ~/.config/zed/themes
 cp zed/matrix-green.json ~/.config/zed/themes/matrix-green.json
-
-mkdir -p ~/.vscode/extensions/matrix-green-theme
-cp -R vscode/* ~/.vscode/extensions/matrix-green-theme/
 ```
 
-Copy installs do not update when repo files change. Re-copy after edits.
+For VS Code, build and install the `.vsix`:
+
+```bash
+cd vscode
+npm run package
+cd ..
+code --install-extension vscode/matrix-green-theme-0.1.0.vsix
+```
+
+Copy installs do not update when repo files change. Re-copy after edits, or rebuild/reinstall the VS Code `.vsix` after VS Code theme edits.
 
 ## Palette direction
 
@@ -160,6 +168,9 @@ matrix-themes/
 ├── ghostty/matrix
 ├── zed/matrix-green.json
 ├── vscode/package.json
+├── vscode/README.md
+├── vscode/.vscodeignore
+├── vscode/matrix-green-theme-0.1.0.vsix
 ├── vscode/themes/matrix-green-color-theme.json
 ├── AGENTS.md
 └── README.md
